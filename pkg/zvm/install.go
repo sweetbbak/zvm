@@ -22,7 +22,7 @@ import (
 	"strings"
 
 	"github.com/schollz/progressbar/v3"
-	"github.com/tristanisham/zvm/cli/meta"
+	"github.com/sweetbbak/zvm/pkg/meta"
 
 	"github.com/charmbracelet/log"
 
@@ -650,7 +650,7 @@ func unzipSource(source, destination string) error {
 
 		err := unzipFile(f, destination)
 		if err != nil {
-			meta.CtaFatal(err)
+			meta.Fatal(err)
 		}
 
 	}

@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="400px"  src ="https://github.com/tristanisham/zvm/assets/23124818/be5c3713-8aaf-4419-a1ae-acb29da36eae"/>
+  <img width="400px"  src ="https://github.com/sweetbbak/zvm/assets/23124818/be5c3713-8aaf-4419-a1ae-acb29da36eae"/>
 </p>
 
 Zig Version Manager (zvm) is a tool for managing your [Zig](https://ziglang.org/) installs. With std
@@ -34,7 +34,7 @@ like), then ZVM will update the exact executable you've called `upgrade` from.
 ```sh
 curl https://raw.githubusercontent.com/tristanisham/zvm/master/install.sh | bash
 # Or
-go install -ldflags "-s -w" github.com/tristanisham/zvm@latest
+go install -ldflags "-s -w" github.com/sweetbbak/zvm@latest
 ```
 
 <!-- This script will **automatically append** ZVM's required environment variables (see below) to `~/.profile` or `~/.bashrc`. -->
@@ -64,7 +64,7 @@ powershell -c "irm https://raw.githubusercontent.com/tristanisham/zvm/master/ins
 ## Manually
 
 Please grab the
-[latest release](https://github.com/tristanisham/zvm/releases/latest).
+[latest release](https://github.com/sweetbbak/zvm/releases/latest).
 
 ## Putting ZVM on your Path
 
@@ -111,7 +111,7 @@ labeled, and any commands potentially on the chopping block will print notice.
 The program is under constant development, and the author is very willing to
 work with contributors. **If you have any issues, ideas, or contributions you'd
 like to suggest
-[create a GitHub issue](https://github.com/tristanisham/zvm/issues/new/choose)**.
+[create a GitHub issue](https://github.com/sweetbbak/zvm/issues/new/choose)**.
 
 # How to use ZVM
 
@@ -321,7 +321,7 @@ ZVM has additional setting stored in `~/.zvm/settings.json`. You can manually up
 ## Please Consider Giving the Repo a Star ⭐
 
 <!-- https://star-history.com/#tristanisham/zvm&Timeline -->
-<a href="https://github.com/tristanisham/zvm">
+<a href="https://github.com/sweetbbak/zvm">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=tristanisham/zvm&type=Timeline&theme=dark" />
     <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=tristanisham/zvm&type=Timeline" />

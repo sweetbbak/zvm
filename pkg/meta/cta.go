@@ -11,8 +11,8 @@ import (
 	"github.com/charmbracelet/log"
 )
 
-// CtaFatal prints an aesthetic CTA and exits with an error.
-func CtaFatal(err error) {
+// Fatal prints an aesthetic CTA and exits with an error.
+func Fatal(err error) {
 	style := lipgloss.NewStyle().
 		Bold(true).
 		Foreground(lipgloss.Color("#FAFAFA")).
@@ -33,12 +33,12 @@ func CtaFatal(err error) {
 		Foreground(lipgloss.Color("#fee12b"))
 
 	fmt.Printf("\nIf you're experiencing a bug, run %s. If there's a new version of ZVM, we may have already fixed your bug in a new release :)\n", yellowText.Render("zvm upgrade"))
-	fmt.Printf("Otherwise, please report this error as a GitHub issue.\n%s\n", blueLink.Render("https://github.com/tristanisham/zvm/issues/\n"))
+	fmt.Printf("Otherwise, please report this error as a GitHub issue.\n%s\n", blueLink.Render("https://github.com/sweetbbak/zvm/issues/\n"))
 	os.Exit(1)
 }
 
-// CtaUpgradeAvailable prints an aesthetic notice.
-func CtaUpgradeAvailable(tag string) {
+// Upgrade prints an aesthetic notice.
+func Upgrade(tag string) {
 	style := lipgloss.NewStyle().
 		Bold(true).
 		Foreground(lipgloss.Color("#FAFAFA")).
@@ -57,11 +57,11 @@ func CtaUpgradeAvailable(tag string) {
 	yellowText := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#fee12b"))
 
-	fmt.Printf("\nZVM %s is available. You are currently on %s.\n\nRun %s or download the latest release at\n%s\n\n", blueLink.Render(tag), blueLink.Render(VERSION), yellowText.Render("zvm upgrade"), blueLink.Render("https://github.com/tristanisham/zvm/releases/latest"))
+	fmt.Printf("\nZVM %s is available. You are currently on %s.\n\nRun %s or download the latest release at\n%s\n\n", blueLink.Render(tag), blueLink.Render(VERSION), yellowText.Render("zvm upgrade"), blueLink.Render("https://github.com/sweetbbak/zvm/releases/latest"))
 }
 
-// CtaGeneric prints an aesthetic generic notice.
-func CtaGeneric(header string, text string) {
+// Notice prints an aesthetic generic notice.
+func Notice(header string, text string) {
 	style := lipgloss.NewStyle().
 		Bold(true).
 		Foreground(lipgloss.Color("#FAFAFA")).

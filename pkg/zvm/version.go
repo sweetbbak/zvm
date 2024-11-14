@@ -16,7 +16,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/tristanisham/zvm/cli/meta"
+	"github.com/sweetbbak/zvm/pkg/meta"
 
 	"github.com/charmbracelet/log"
 )

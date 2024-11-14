@@ -8,7 +8,7 @@ function Install-ZVM {
     $ZVMSelf = mkdir -Force "${ZVMRoot}\self"
     $ZVMBin = mkdir -Force "${ZVMRoot}\bin"
     $Target = $urlSuffix
-    $URL = "https://github.com/tristanisham/zvm/releases/latest/download/$urlSuffix"
+    $URL = "https://github.com/sweetbbak/zvm/releases/latest/download/$urlSuffix"
     $ZipPath = "${ZVMSelf}\$Target"
 
     $null = mkdir -Force $ZVMSelf

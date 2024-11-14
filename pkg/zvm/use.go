@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/log"
-	"github.com/tristanisham/zvm/cli/meta"
+	"github.com/sweetbbak/zvm/pkg/meta"
 )
 
 func (z *ZVM) Use(ver string) error {
@@ -38,10 +38,6 @@ func (z *ZVM) setBin(ver string) error {
 	// .zvm/master
 	version_path := filepath.Join(z.baseDir, ver)
 	bin_dir := filepath.Join(z.baseDir, "bin")
-
-	// Came across https://pkg.go.dev/os#Lstat
-	// which is specifically to check symbolic links.
-	// Seemed like the more appropriate solution here
 	stat, err := os.Lstat(bin_dir)
 
 	// Actually we need to check if the symbolic link to ~/.zvm/bin

@@ -10,11 +10,10 @@ import (
 	"os"
 	"strings"
 
-	"github.com/tristanisham/zvm/cli"
-	"github.com/tristanisham/zvm/cli/meta"
-	opts "github.com/urfave/cli/v2"
-
 	"github.com/charmbracelet/log"
+	"github.com/sweetbbak/zvm/pkg/meta"
+	cli "github.com/sweetbbak/zvm/pkg/zvm"
+	opts "github.com/urfave/cli/v2"
 )
 
 var (
@@ -63,8 +62,7 @@ var zvmApp = &opts.App{
 			Aliases: []string{"i"},
 			Flags: []opts.Flag{
 				&opts.BoolFlag{
-					Name: "zls",
-					// Aliases: []string{"z"},
+					Name:  "zls",
 					Usage: "install ZLS",
 				},
 				&opts.BoolFlag{
@@ -215,9 +213,10 @@ var zvmApp = &opts.App{
 			},
 		},
 		{
-			Name:  "vmu",
-			Usage: "set ZVM's version map URL for custom Zig distribution servers",
-			Args:  true,
+			Name:    "src",
+			Usage:   "set ZVM's version map URL for custom Zig distribution servers",
+			Args:    true,
+			Aliases: []string{"vmu", "origin", "upstream"},
 			Subcommands: []*opts.Command{
 				{
 					Name:      "zig",
@@ -281,46 +280,7 @@ func main() {
 		log.SetLevel(log.DebugLevel)
 	}
 
-	_, checkUpgradeDisabled := os.LookupEnv("ZVM_SET_CU")
-	log.Debug("Automatic Upgrade Checker", "disabled", checkUpgradeDisabled)
-
-	// Upgrade
-	upSig := make(chan string, 1)
-
-	if !checkUpgradeDisabled {
-		go func(out chan<- string) {
-			if tag, ok, _ := cli.CanIUpgrade(); ok {
-				out <- tag
-			} else {
-				out <- ""
-			}
-		}(upSig)
-	} else {
-		upSig <- ""
-	}
-
-	// run and report errors
 	if err := zvmApp.Run(os.Args); err != nil {
-		// 		if meta.VERSION == "v0.7.9" && errors.Is(err, cli.ErrInvalidVersionMap) {
-		// 			meta.CtaGeneric("Help", `Encountered an issue while trying to install ZLS for Zig 'master'.
-
-		// Problem: ZVM v0.7.7 and v0.7.8 may have saved an invalid 'zlsVersionMapUrl' to your settings,
-		// which causes this error. The latest version, v0.7.9, can fix this issue by using the correct URL.
-
-		// To resolve this:
-		// 1. Open your ZVM settings file: '~/.zvm/settings.json'
-		// 2. Remove the 'zlsVersionMapUrl' key & value from the file (if present).
-		// What happens next: ZVM will automatically use the correct version map the next time you run it
-		// If the issue persists, please double-check your settings and try again, or create a GitHub Issue.`)
-		// 		}
-		meta.CtaFatal(err)
-	}
-
-	if tag := <-upSig; tag != "" {
-		if printUpgradeNotice {
-			meta.CtaUpgradeAvailable(tag)
-		} else {
-			log.Infof("You are now using ZVM %s\n", tag)
-		}
+		meta.Fatal(err)
 	}
 }

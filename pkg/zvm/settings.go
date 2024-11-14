@@ -11,7 +11,6 @@ import (
 	"os"
 
 	"github.com/charmbracelet/log"
-
 	"github.com/tristanisham/clr"
 )
 
@@ -124,8 +123,6 @@ func isValidWebURL(urlString string) error {
 	if parsedURL.Host == "" {
 		return fmt.Errorf("URL host (domain) is empty")
 	}
-
-	// Optionally, you can add more checks (like path, query params, etc.) here if needed
 
 	return nil // URL is valid
 }

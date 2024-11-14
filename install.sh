@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ZVM install script - v0.2.0 - ZVM: https://github.com/tristanisham/zvm
+# ZVM install script - v0.2.0 - ZVM: https://github.com/sweetbbak/zvm
 
 
 
@@ -24,10 +24,10 @@ install_latest() {
 
         if command -v wget >/dev/null 2>&1; then
             echo "wget is installed. Using wget..."
-            wget -q --show-progress --max-redirect 5 -O zvm.tar "https://github.com/tristanisham/zvm/releases/latest/download/$1"
+            wget -q --show-progress --max-redirect 5 -O zvm.tar "https://github.com/sweetbbak/zvm/releases/latest/download/$1"
         else
             echo "wget is not installed. Using curl..."
-            curl -L --max-redirs 5 "https://github.com/tristanisham/zvm/releases/latest/download/$1" -o zvm.tar
+            curl -L --max-redirs 5 "https://github.com/sweetbbak/zvm/releases/latest/download/$1" -o zvm.tar
         fi
         
         mkdir -p $HOME/.zvm/self
@@ -38,21 +38,21 @@ install_latest() {
      # Do something under GNU/Linux platform
         if command -v wget2 >/dev/null 2>&1; then
             echo "wget2 is installed. Using wget2..."
-            wget2 -q --force-progress --max-redirect 5 -O zvm.tar "https://github.com/tristanisham/zvm/releases/latest/download/$1"
+            wget2 -q --force-progress --max-redirect 5 -O zvm.tar "https://github.com/sweetbbak/zvm/releases/latest/download/$1"
         elif command -v wget >/dev/null 2>&1; then
     
             echo "wget is installed. Using wget..."
-            wget -q --show-progress --max-redirect 5 -O zvm.tar "https://github.com/tristanisham/zvm/releases/latest/download/$1"
+            wget -q --show-progress --max-redirect 5 -O zvm.tar "https://github.com/sweetbbak/zvm/releases/latest/download/$1"
         else
             echo "wget is not installed. Using curl..."
-            curl -L --max-redirs 5 "https://github.com/tristanisham/zvm/releases/latest/download/$1" -o zvm.tar
+            curl -L --max-redirs 5 "https://github.com/sweetbbak/zvm/releases/latest/download/$1" -o zvm.tar
         fi
         
         mkdir -p $HOME/.zvm/self
         tar -xf zvm.tar -C $HOME/.zvm/self
         rm "zvm.tar"
      elif [ $OS = "MINGW32_NT" ] || [ $OS == "MINGW64_NT" ]; then
-        curl -L --max-redirs 5 "https://github.com/tristanisham/zvm/releases/latest/download/$1" -o zvm.zip
+        curl -L --max-redirs 5 "https://github.com/sweetbbak/zvm/releases/latest/download/$1" -o zvm.zip
         # Additional extraction steps for Windows can be added here
     fi
 }

@@ -18,7 +18,7 @@ import (
 
 	"github.com/schollz/progressbar/v3"
 
-	"github.com/tristanisham/zvm/cli/meta"
+	"github.com/sweetbbak/zvm/pkg/meta"
 
 	"github.com/charmbracelet/log"
 	"github.com/tristanisham/clr"
@@ -34,7 +34,7 @@ func (z *ZVM) Upgrade() error {
 		}
 	}()
 
-	tagName, upgradable, err := CanIUpgrade()
+	tagName, upgradable, err := CanUpgrade()
 	if err != nil {
 		return errors.Join(ErrFailedUpgrade, err)
 	}
@@ -60,8 +60,7 @@ func (z *ZVM) Upgrade() error {
 	}
 
 	download := fmt.Sprintf("zvm-%s-%s.%s", runtime.GOOS, runtime.GOARCH, archive)
-
-	downloadUrl := fmt.Sprintf("https://github.com/tristanisham/zvm/releases/latest/download/%s", download)
+	downloadUrl := fmt.Sprintf("https://github.com/sweetbbak/zvm/releases/latest/download/%s", download)
 
 	resp, err := http.Get(downloadUrl)
 	if err != nil {
@@ -122,10 +121,6 @@ func (z *ZVM) Upgrade() error {
 			log.Warn("This command might break if ZVM is installed outside of ~/.zvm/self/")
 			return fmt.Errorf("upgrade error: %q", err)
 		}
-		// fmt.Println("Run the following to complete your upgrade on Windows.")
-		// fmt.Printf("- Command Prompt:\n\tmove /Y '%s' '%s'\n", secondaryZVM, zvmPath)
-		// fmt.Printf("- Powershell:\n\tMove-Item -Path '%s' -Destination '%s' -Force\n", secondaryZVM, zvmPath)
-
 	} else {
 		if err := untar(tempDownload.Name(), newTemp); err != nil {
 			log.Error(err)
@@ -282,7 +277,7 @@ func isSymlink(path string) (bool, error) {
 	return fileInfo.Mode()&os.ModeSymlink != 0, nil
 }
 
-func CanIUpgrade() (string, bool, error) {
+func CanUpgrade() (string, bool, error) {
 	release, err := getLatestGitHubRelease("tristanisham", "zvm")
 	if err != nil {
 		return "", false, err
@@ -294,23 +289,6 @@ func CanIUpgrade() (string, bool, error) {
 
 	return release.TagName, false, nil
 }
-
-// func getGitHubReleases(owner, repo string) ([]GithubRelease, error) {
-// 	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases", owner, repo)
-// 	resp, err := http.Get(url)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	defer resp.Body.Close()
-
-// 	var releases []GithubRelease
-// 	err = json.NewDecoder(resp.Body).Decode(&releases)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	return releases, nil
-// }
 
 func getLatestGitHubRelease(owner, repo string) (*GithubRelease, error) {
 	url := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", owner, repo)
@@ -344,15 +322,15 @@ type GithubRelease struct {
 	AssetsURL       string    `json:"assets_url"`
 	UploadURL       string    `json:"upload_url"`
 	Assets          []struct {
-		UpdatedAt          time.Time   `json:"updated_at"`
-		CreatedAt          time.Time   `json:"created_at"`
-		Label              interface{} `json:"label"`
-		ContentType        string      `json:"content_type"`
-		Name               string      `json:"name"`
-		URL                string      `json:"url"`
-		State              string      `json:"state"`
-		NodeID             string      `json:"node_id"`
-		BrowserDownloadURL string      `json:"browser_download_url"`
+		UpdatedAt          time.Time `json:"updated_at"`
+		CreatedAt          time.Time `json:"created_at"`
+		Label              any       `json:"label"`
+		ContentType        string    `json:"content_type"`
+		Name               string    `json:"name"`
+		URL                string    `json:"url"`
+		State              string    `json:"state"`
+		NodeID             string    `json:"node_id"`
+		BrowserDownloadURL string    `json:"browser_download_url"`
 		Uploader           struct {
 			FollowingURL      string `json:"following_url"`
 			NodeID            string `json:"node_id"`

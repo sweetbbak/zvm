@@ -20,13 +20,16 @@ import (
 var ErrNoSettings = errors.New("settings.json not found")
 
 func Initialize() *ZVM {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		home = "~"
-	}
-	zvm_path := os.Getenv("ZVM_PATH")
-	if zvm_path == "" {
-		zvm_path = filepath.Join(home, ".zvm")
+	zvm_path, ok := os.LookupEnv("ZVM_PATH")
+
+	if !ok {
+		home, ok := os.LookupEnv("XDG_DATA_DIR")
+		if !ok {
+			home, _ = os.UserHomeDir()
+			zvm_path = filepath.Join(home, ".zvm")
+		} else {
+			zvm_path = filepath.Join(home, "zvm")
+		}
 	}
 
 	if _, err := os.Stat(zvm_path); errors.Is(err, fs.ErrNotExist) {
@@ -86,18 +89,6 @@ type zigVersion = map[string]any
 
 type ZigOnlVersion = map[string][]map[string]string
 
-//	func (z *ZVM) loadVersionCache() error {
-//		ver, err := os.ReadFile(filepath.Join(z.zvmBaseDir, "versions.json"))
-//		if err != nil {
-//			return err
-//		}
-//		if err := json.Unmarshal(ver, &z.zigVersions); err != nil {
-//			return err
-//		}
-//		return nil
-//	}
-//
-// TODO switch to error so we can handle common typos. Make it return an (error, bool)
 func validVmuAlis(version string) bool {
 	return version == "default" || version == "mach"
 }
@@ -108,9 +99,11 @@ func (z ZVM) getVersion(version string) error {
 	}
 
 	targetZig := strings.TrimSpace(filepath.Join(z.baseDir, version, "zig"))
-	cmd := exec.Command(targetZig, "version")
 	var zigVersion strings.Builder
+
+	cmd := exec.Command(targetZig, "version")
 	cmd.Stdout = &zigVersion
+
 	err := cmd.Run()
 	if err != nil {
 		log.Warn(err)
@@ -143,36 +136,3 @@ func (z *ZVM) loadSettings() error {
 
 	return json.Unmarshal(data, &z.Settings)
 }
-
-// func (z *ZVM) AlertIfUpgradable() {
-// 	if !z.Settings.StartupCheckUpgrade {
-// 		return
-// 	}
-// 	log.Debug("Checking for upgrade on startup is enabled")
-// 	upgradable, tagName, err := CanIUpgrade()
-// 	if err != nil {
-// 		log.Info("failed new zvm version check")
-// 	}
-
-// 	if upgradable {
-// 		coloredText := "zvm upgrade"
-// 		if z.Settings.UseColor {
-// 			coloredText = clr.Blue("zvm upgrade")
-// 		}
-
-// 		fmt.Printf("There's a new version of ZVM (%s).\n Run '%s' to install it!\n", tagName, coloredText)
-// 	}
-// }
-
-// func (z *ZVM) ConflictCheck(file string) (string, error) {
-// 	zls, err := exec.LookPath("zls")
-// 	if err != nil {
-// 		return "", err
-// 	}
-
-// 	linuxPath := filepath.Join(z.baseDir,"bin/zls")
-// 	if _, err := os.Stat(linuxPath); err == nil {
-
-// 	}
-// 	return zls, nil
-// }
